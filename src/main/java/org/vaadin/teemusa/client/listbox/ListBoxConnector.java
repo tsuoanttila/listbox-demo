@@ -1,7 +1,11 @@
 package org.vaadin.teemusa.client.listbox;
 
+import java.util.logging.Logger;
+
 import org.vaadin.teemusa.beandatasource.client.HasDataSource;
 
+import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.user.client.ui.ListBox;
 import com.vaadin.client.data.DataChangeHandler;
 import com.vaadin.client.data.DataSource;
@@ -18,6 +22,21 @@ public class ListBoxConnector extends AbstractComponentConnector implements HasD
 	@Override
 	public ListBox getWidget() {
 		return (ListBox) super.getWidget();
+	}
+
+	@Override
+	protected void init() {
+		super.init();
+
+		getWidget().addChangeHandler(new ChangeHandler() {
+
+			@Override
+			public void onChange(ChangeEvent event) {
+				// Data has been updated
+				Logger.getLogger("foo").warning("Selected: " + getWidget().getSelectedItemText() + " (value: "
+						+ getWidget().getSelectedValue() + ")");
+			}
+		});
 	}
 
 	@Override
