@@ -63,5 +63,5 @@ hs_err_pid*
 
 # Demo widgetset and theme cache #
 
-bean-grid-demo/src/main/webapp/VAADIN/themes/demo/styles.scss.cache
-bean-grid-demo/src/main/webapp/VAADIN/widgetsets/
+src/main/webapp/VAADIN/themes/mytheme/styles.scss.cache
+src/main/webapp/VAADIN/widgetsets/
