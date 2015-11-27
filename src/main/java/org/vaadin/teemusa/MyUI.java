@@ -7,14 +7,14 @@ import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 
+import org.vaadin.teemusa.listbox.ListBox;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -28,15 +28,12 @@ public class MyUI extends UI {
 		layout.setMargin(true);
 		setContent(layout);
 
-		Button button = new Button("Click Me");
-		button.addClickListener(new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				layout.addComponent(new Label("Thank you for clicking"));
-			}
-		});
-		layout.addComponent(button);
+		ListBox<Reservation> listBox = new ListBox<>(Reservation.generateReservations(),
+				Reservation::getReservationName);
+		listBox.addValueChangeListener(
+				event -> Notification.show("Selected Reservation for " + event.getNewValue().getReservationName()));
 
+		layout.addComponent(listBox);
 	}
 
 	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
