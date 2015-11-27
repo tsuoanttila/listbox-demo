@@ -18,6 +18,7 @@ import elemental.json.JsonObject;
 public class ListBoxConnector extends AbstractComponentConnector implements HasDataSource {
 
 	private DataSource<JsonObject> dataSource;
+	private ListBoxSelectRpc rpc;
 
 	@Override
 	public ListBox getWidget() {
@@ -28,13 +29,13 @@ public class ListBoxConnector extends AbstractComponentConnector implements HasD
 	protected void init() {
 		super.init();
 
+		rpc = getRpcProxy(ListBoxSelectRpc.class);
 		getWidget().addChangeHandler(new ChangeHandler() {
 
 			@Override
 			public void onChange(ChangeEvent event) {
-				// Data has been updated
-				Logger.getLogger("foo").warning("Selected: " + getWidget().getSelectedItemText() + " (value: "
-						+ getWidget().getSelectedValue() + ")");
+				// Send selection to server
+				rpc.select(getWidget().getSelectedValue());
 			}
 		});
 	}
