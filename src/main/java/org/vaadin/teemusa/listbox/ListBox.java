@@ -6,6 +6,7 @@ import org.vaadin.teemusa.TypedComponent;
 import org.vaadin.teemusa.beandatasource.CollectionDataSource;
 import org.vaadin.teemusa.beandatasource.DataProvider;
 import org.vaadin.teemusa.beandatasource.interfaces.DataGenerator;
+import org.vaadin.teemusa.client.listbox.ListBoxSelectRpc;
 
 import com.vaadin.ui.AbstractComponent;
 
@@ -18,6 +19,7 @@ public class ListBox<T> extends AbstractComponent implements TypedComponent<T> {
 	}
 
 	private DataProvider<T> dataProvider;
+	private T selected;
 
 	public ListBox(Collection<T> values, final NameProvider<T> nameProvider) {
 		super();
@@ -32,6 +34,18 @@ public class ListBox<T> extends AbstractComponent implements TypedComponent<T> {
 			@Override
 			public void destroyData(T bean) {
 				// No data needs to be destroyed.
+			}
+		});
+
+		registerRpc(new ListBoxSelectRpc() {
+
+			@Override
+			public void select(String key) {
+				T oldValue = selected;
+				selected = dataProvider.getKeyMapper().get(key);
+				if (oldValue != selected) {
+					// TODO: fire event
+				}
 			}
 		});
 	}
