@@ -10,7 +10,7 @@
 	<name>listbox-demo</name>
 
 	<properties>
-		<vaadin.version>7.5.9</vaadin.version>
+		<vaadin.version>7.6.0.beta1</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 		<jetty.plugin.version>9.2.3.v20140905</jetty.plugin.version>
 		<project.source.version>1.8</project.source.version>
@@ -24,6 +24,10 @@
 			<url>http://maven.vaadin.com/vaadin-addons</url>
 		</repository>
 		<repository>
+			<id>vaadin-prereleases</id>
+			<url>http://maven.vaadin.com/vaadin-prereleases</url>
+		</repository>
+		<repository>
 			<id>vaadin-snapshots</id>
 			<url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
 			<releases>
@@ -34,6 +38,13 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>vaadin-prereleases</id>
+			<url>http://maven.vaadin.com/vaadin-prereleases</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<dependencyManagement>
 		<dependencies>
