@@ -58,6 +58,15 @@ public class ListBoxConnector extends AbstractComponentConnector implements HasD
 	}
 
 	private void resetValues() {
-		// Here we're supposed to reset all the data in the ListBox widget
+		getWidget().clear();
+
+		for (int i = 0; i < dataSource.size(); ++i) {
+			JsonObject item = dataSource.getRow(i);
+			if (item != null) {
+				// We wrote the name provider output to "n"
+				// Key is always stored at "k"
+				getWidget().addItem(item.getString("n"), item.getString("k"));
+			}
+		}
 	}
 }
