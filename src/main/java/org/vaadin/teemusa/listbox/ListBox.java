@@ -7,6 +7,7 @@ import org.vaadin.teemusa.TypedComponent;
 import org.vaadin.teemusa.beandatasource.CollectionDataSource;
 import org.vaadin.teemusa.beandatasource.DataProvider;
 import org.vaadin.teemusa.beandatasource.interfaces.DataGenerator;
+import org.vaadin.teemusa.beandatasource.interfaces.DataSource;
 import org.vaadin.teemusa.client.listbox.ListBoxSelectRpc;
 import org.vaadin.teemusa.listbox.ValueChange.ValueChangeListener;
 import org.vaadin.teemusa.listbox.ValueChange.ValueChangeNotifier;
@@ -26,8 +27,11 @@ public class ListBox<T> extends AbstractComponent implements TypedComponent<T>, 
 	private Collection<ValueChangeListener<T>> listeners = new LinkedHashSet<ValueChangeListener<T>>();
 
 	public ListBox(Collection<T> values, final NameProvider<T> nameProvider) {
-		super();
-		dataProvider = new CollectionDataSource<>(values).extend(this);
+		this(new CollectionDataSource<>(values), nameProvider);
+	}
+
+	public ListBox(DataSource<T> dataSource, NameProvider<T> nameProvider) {
+		dataProvider = dataSource.extend(this);
 		dataProvider.addDataGenerator(new DataGenerator<T>() {
 
 			@Override
