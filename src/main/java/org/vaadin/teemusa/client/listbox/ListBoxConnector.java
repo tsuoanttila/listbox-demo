@@ -37,6 +37,9 @@ public class ListBoxConnector extends AbstractComponentConnector implements HasD
 				rpc.select(getWidget().getSelectedValue());
 			}
 		});
+
+		getWidget().addItem(" ", "");
+		getWidget().setSelectedIndex(0);
 	}
 
 	@Override
@@ -61,8 +64,17 @@ public class ListBoxConnector extends AbstractComponentConnector implements HasD
 
 			@Override
 			public void dataRemoved(int firstRowIndex, int numberOfRows) {
+				boolean resetSelection = false;
 				for (int i = 0; i < numberOfRows && firstRowIndex < getWidget().getItemCount(); ++i) {
-					getWidget().removeItem(firstRowIndex);
+					if (!resetSelection && getWidget().getSelectedIndex() == firstRowIndex) {
+						resetSelection = true;
+					}
+					// Offset by 1, due to empty item.
+					getWidget().removeItem(firstRowIndex + 1);
+				}
+
+				if (resetSelection) {
+					getWidget().setSelectedIndex(0);
 				}
 			}
 
@@ -82,10 +94,15 @@ public class ListBoxConnector extends AbstractComponentConnector implements HasD
 	}
 
 	private void resetValues() {
-		getWidget().clear();
+		// Remove all non-empty items.
+		while (getWidget().getItemCount() > 1) {
+			getWidget().removeItem(1);
+		}
+
 		for (int i = 0; i < dataSource.size(); ++i) {
 			addItem(i);
 		}
+		getWidget().setSelectedIndex(0);
 	}
 
 	protected void addItem(int index) {

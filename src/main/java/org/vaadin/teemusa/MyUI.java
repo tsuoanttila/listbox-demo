@@ -37,6 +37,8 @@ public class MyUI extends UI {
 				event -> Notification.show("Selected Reservation for " + event.getNewValue().getReservationName()));
 
 		layout.addComponent(listBox);
+		layout.addComponent(
+				new Button("Remove reservation", event -> listBox.getDataSource().remove(listBox.getSelected())));
 
 		TextField name = new TextField("Reservation Name");
 		Button button = new Button("Add reservation", event -> {

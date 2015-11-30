@@ -52,7 +52,13 @@ public class LBox<T> extends AbstractComponent implements TypedComponent<T>, Val
 			@Override
 			public void select(String key) {
 				T oldValue = selected;
-				selected = dataProvider.getKeyMapper().get(key);
+
+				if (key.isEmpty()) {
+					selected = null;
+				} else {
+					selected = dataProvider.getKeyMapper().get(key);
+				}
+
 				if (oldValue != selected) {
 					// TODO: use fireEvent
 					ValueChange<T> event = new ValueChange<T>(oldValue, selected);
@@ -78,5 +84,9 @@ public class LBox<T> extends AbstractComponent implements TypedComponent<T>, Val
 
 	public DataSource<T> getDataSource() {
 		return dataSource;
+	}
+
+	public T getSelected() {
+		return selected;
 	}
 }
