@@ -33,8 +33,13 @@ public class MyUI extends UI {
 		setContent(layout);
 
 		LBox<Reservation> listBox = new LBox<>(Reservation.generateReservations(), Reservation::getReservationName);
-		listBox.addValueChangeListener(
-				event -> Notification.show("Selected Reservation for " + event.getNewValue().getReservationName()));
+		listBox.addValueChangeListener(event -> {
+			if (event.getNewValue() != null) {
+				Notification.show("Selected Reservation for " + event.getNewValue().getReservationName());
+			} else {
+				Notification.show("Selection cleared");
+			}
+		});
 
 		layout.addComponent(listBox);
 		layout.addComponent(
