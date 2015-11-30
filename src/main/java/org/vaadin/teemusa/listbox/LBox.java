@@ -25,12 +25,14 @@ public class LBox<T> extends AbstractComponent implements TypedComponent<T>, Val
 	private final DataProvider<T> dataProvider;
 	private T selected;
 	private Collection<ValueChangeListener<T>> listeners = new LinkedHashSet<ValueChangeListener<T>>();
+	private final DataSource<T> dataSource;
 
 	public LBox(Collection<T> values, final NameProvider<T> nameProvider) {
 		this(new CollectionDataSource<>(values), nameProvider);
 	}
 
 	public LBox(DataSource<T> dataSource, NameProvider<T> nameProvider) {
+		this.dataSource = dataSource;
 		dataProvider = dataSource.extend(this);
 		dataProvider.addDataGenerator(new DataGenerator<T>() {
 
@@ -72,5 +74,9 @@ public class LBox<T> extends AbstractComponent implements TypedComponent<T>, Val
 	public void removeValueChangeListener(ValueChangeListener<T> listener) {
 		// TODO: use proper event bus
 		listeners.remove(listener);
+	}
+
+	public DataSource<T> getDataSource() {
+		return dataSource;
 	}
 }

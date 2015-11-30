@@ -14,6 +14,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
@@ -31,12 +32,24 @@ public class MyUI extends UI {
 		layout.setMargin(true);
 		setContent(layout);
 
-		LBox<Reservation> listBox = new LBox<>(Reservation.generateReservations(),
-				Reservation::getReservationName);
+		LBox<Reservation> listBox = new LBox<>(Reservation.generateReservations(), Reservation::getReservationName);
 		listBox.addValueChangeListener(
 				event -> Notification.show("Selected Reservation for " + event.getNewValue().getReservationName()));
 
 		layout.addComponent(listBox);
+
+		TextField name = new TextField("Reservation Name");
+		Button button = new Button("Add reservation", event -> {
+			listBox.getDataSource().add(new Reservation(name.getValue()));
+			name.clear();
+		});
+		HorizontalLayout hLayout = new HorizontalLayout(name, button);
+		layout.addComponent(hLayout);
+
+		layout.setSizeFull();
+		layout.setComponentAlignment(hLayout, Alignment.BOTTOM_LEFT);
+		hLayout.setWidth("100%");
+		hLayout.setComponentAlignment(button, Alignment.BOTTOM_RIGHT);
 	}
 
 	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
