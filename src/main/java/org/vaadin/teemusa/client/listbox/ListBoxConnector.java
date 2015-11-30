@@ -62,7 +62,9 @@ public class ListBoxConnector extends AbstractComponentConnector implements HasD
 
 			@Override
 			public void dataRemoved(int firstRowIndex, int numberOfRows) {
-				resetValues();
+				for (int i = 0; i < numberOfRows && firstRowIndex < getWidget().getItemCount(); ++i) {
+					getWidget().removeItem(firstRowIndex);
+				}
 			}
 
 			@Override
@@ -72,21 +74,27 @@ public class ListBoxConnector extends AbstractComponentConnector implements HasD
 
 			@Override
 			public void dataAdded(int firstRowIndex, int numberOfRows) {
-				resetValues();
+				// Add new ones to end of list, no matter the actual place
+				for (int i = 0; i < numberOfRows; ++i) {
+					addItem(firstRowIndex + i);
+				}
 			}
 		});
 	}
 
 	private void resetValues() {
 		getWidget().clear();
-
 		for (int i = 0; i < dataSource.size(); ++i) {
-			JsonObject item = dataSource.getRow(i);
-			if (item != null) {
-				// We wrote the name provider output to "n"
-				// Key is always stored at "k"
-				getWidget().addItem(item.getString("n"), item.getString("k"));
-			}
+			addItem(i);
+		}
+	}
+
+	protected void addItem(int index) {
+		JsonObject item = dataSource.getRow(index);
+		if (item != null) {
+			// We wrote the name provider output to "n"
+			// Key is always stored at "k"
+			getWidget().addItem(item.getString("n"), item.getString("k"));
 		}
 	}
 }
