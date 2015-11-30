@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>org.vaadin.teemusa</groupId>
 			<artifactId>bean-datasource</artifactId>
-			<version>0.3</version>
+			<version>0.4</version>
 		</dependency>
 		<!-- Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory). 
 			For widgetset compilation, vaadin-client-compiler is automatically added 
