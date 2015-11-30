@@ -7,14 +7,17 @@ import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.vaadin.teemusa.listbox.ListBox;
+import org.vaadin.teemusa.listbox.LBox;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -28,7 +31,7 @@ public class MyUI extends UI {
 		layout.setMargin(true);
 		setContent(layout);
 
-		ListBox<Reservation> listBox = new ListBox<>(Reservation.generateReservations(),
+		LBox<Reservation> listBox = new LBox<>(Reservation.generateReservations(),
 				Reservation::getReservationName);
 		listBox.addValueChangeListener(
 				event -> Notification.show("Selected Reservation for " + event.getNewValue().getReservationName()));

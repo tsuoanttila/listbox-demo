@@ -16,21 +16,21 @@ import com.vaadin.ui.AbstractComponent;
 
 import elemental.json.JsonObject;
 
-public class ListBox<T> extends AbstractComponent implements TypedComponent<T>, ValueChangeNotifier<T> {
+public class LBox<T> extends AbstractComponent implements TypedComponent<T>, ValueChangeNotifier<T> {
 
 	public interface NameProvider<T> {
 		String getName(T value);
 	}
 
-	private DataProvider<T> dataProvider;
+	private final DataProvider<T> dataProvider;
 	private T selected;
 	private Collection<ValueChangeListener<T>> listeners = new LinkedHashSet<ValueChangeListener<T>>();
 
-	public ListBox(Collection<T> values, final NameProvider<T> nameProvider) {
+	public LBox(Collection<T> values, final NameProvider<T> nameProvider) {
 		this(new CollectionDataSource<>(values), nameProvider);
 	}
 
-	public ListBox(DataSource<T> dataSource, NameProvider<T> nameProvider) {
+	public LBox(DataSource<T> dataSource, NameProvider<T> nameProvider) {
 		dataProvider = dataSource.extend(this);
 		dataProvider.addDataGenerator(new DataGenerator<T>() {
 

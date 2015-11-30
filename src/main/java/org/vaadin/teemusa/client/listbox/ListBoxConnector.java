@@ -1,8 +1,7 @@
 package org.vaadin.teemusa.client.listbox;
 
-import java.util.logging.Logger;
-
 import org.vaadin.teemusa.beandatasource.client.HasDataSource;
+import org.vaadin.teemusa.listbox.LBox;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
@@ -14,7 +13,7 @@ import com.vaadin.shared.ui.Connect;
 
 import elemental.json.JsonObject;
 
-@Connect(org.vaadin.teemusa.listbox.ListBox.class)
+@Connect(LBox.class)
 public class ListBoxConnector extends AbstractComponentConnector implements HasDataSource {
 
 	private DataSource<JsonObject> dataSource;
